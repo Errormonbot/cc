@@ -1,0 +1,63 @@
+ChatServer.java 
+import java.io.*;
+import java.net.*;
+public class ChatServer {
+    public static void main(String[] args) {
+        try {
+            ServerSocket  ss = new ServerSocket(8001);
+            System.out.println("Waiting for client to connect...");
+            Socket s = ss.accept();
+            BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+            DataInputStream in = new DataInputStream(s.getInputStream());
+            DataOutputStream out = new DataOutputStream(s.getOutputStream());
+            String receive,send;
+            while((receive = in.readLine()) != null) {
+                if(receive.equals("STOP"))
+                    break;
+                System.out.println("Client Says : "+ receive);
+                System.out.println("Server Says : ");
+                send = br.readLine();
+                out.writeBytes(send+"\n");
+            }
+            out.close();
+            in.close();
+            br.close();
+            s.close();
+        }
+            catch(Exception e){
+            System.out.println(e.toString());
+        }
+    }
+}
+
+ChatClient.java 
+import java.io.*;
+import java.net.*;
+public class ChatClient {
+    public static void main(String[] args) {
+        try {
+            Socket s = new Socket("LocalHost", 8001);
+            BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+            DataInputStream in = new DataInputStream(s.getInputStream());
+            DataOutputStream out = new DataOutputStream(s.getOutputStream());
+            String msg;
+            System.out.println("To Stop Chatting with Server type 'STOP'.");
+            System.out.println("Client Says: ");
+            while ((msg = br.readLine()) != null) {
+                out.writeBytes(msg + "\n");
+                if (msg.equals("STOP")) {
+                    break;
+                }
+                System.out.println("Server Says : " + in.readLine());
+                System.out.println("Client Says : ");
+            }
+            out.close();
+            in.close();
+            br.close();
+            s.close();
+        } 
+                catch (Exception e) {
+            System.out.println(e.toString());
+        }
+    }
+}

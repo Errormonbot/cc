@@ -1,0 +1,59 @@
+PrimeServer.java
+import java.io.*;
+import java.net.*;
+public class PrimeServer {
+    public static void main(String[] args) {
+       try {
+           ServerSocket ss = new ServerSocket(8001);
+           System.out.println("Server Started!");
+           Socket s = ss.accept();
+           DataInputStream in = new DataInputStream(s.getInputStream());
+           DataOutputStream out = new DataOutputStream(s.getOutputStream());
+           int number = in.readInt();
+           boolean isPrime = checkPrime(number);
+           if (isPrime){
+               out.writeUTF(number + " is a prime number");
+           } else {
+               out.writeUTF(number + " is not a prime number");
+           }
+           out.close();
+           in.close();
+           s.close();
+           ss.close();
+       }
+       catch(Exception e){
+           System.out.println(e.toString());
+       }
+    }
+    public static boolean checkPrime(int n){
+        if(n<=1) return false;
+        for(int i=2;i<=Math.sqrt(n);i++){
+            if(n%i==0) return false;
+        }
+        return true;
+    }
+}
+
+PrimeClient.java
+import java.io.*;
+import java.net.*;
+public class PrimeClient {
+    public static void main(String[] args) {
+        try {
+            Socket sc = new Socket("LocalHost", 8001);
+            BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+            System.out.println("Enter the number : ");
+            int a = Integer.parseInt(br.readLine());
+            DataOutputStream out = new DataOutputStream(sc.getOutputStream());
+            DataInputStream in = new DataInputStream(sc.getInputStream());
+            out.writeInt(a);
+            System.out.println(in.readUTF());
+            
+            out.close();
+            in.close();
+            sc.close();
+        } catch(Exception e) {
+            System.out.println(e.toString());
+        }
+    }
+}
