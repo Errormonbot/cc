@@ -1,0 +1,78 @@
+create new project
+java with ant -- java web -- web application
+
+Project Name : CalculatorWSApplication
+
+Server : GlassFish Server 4.1.1
+
+Finish
+
+Right-click the CalculatorWSApplication node and choose New > Web Service. 
+
+Web Service Name : CalculatorWS
+Package : org.me.calculator
+
+tick the option of Create Web Servive from Scratch
+
+Adding an operation of the web services:
+To add an operation to the web services
+Change to the design view in editor
+
+Click on Add Operation Button
+
+Name : add
+Return Type : java.lang.int
+
+Click on Add Button 
+name 	type	final
+i	int		
+j	int	
+
+OK
+
+Return to editor
+
+@WebMethod(operationName = "add") 
+public int add(@WebParam(name = "i") int i, @WebParam(name = "j") int j) 
+{ 
+int k = i + j; 
+return k; 
+}
+
+
+Right click on CalculatorWSApplication -- Deploy
+
+Web Services -> CalculatorWS - right click -- Test Web Service
+
+Close the browser
+Till now we have created on web service 
+Now we will create client 
+Create new project
+
+Java Application 
+Project Name : CalculatorWS_Client_Application
+
+Right click on CalculatorWS_Client_Application -- New -- Web Service Client
+
+Project -- Browse -- Select CalculatorWS
+
+
+Web Service REferences -- CalculatorWS -- CalculatorWS -- CalculatorWSPort -- add 
+Drag the add option in the source section just below the public static void main(String[] args) {}
+
+Write the given code in the added section
+private static int add(int i, int j) 
+{ 
+org.me.calculator.CalculatorWS_Service service = new org.me.calculator.CalculatorWS_Service(); 
+org.me.calculator.CalculatorWS port = service.getCalculatorWSPort(); return port.add(i, j); 
+}
+
+Add the given code in  public static void main
+public static void main(String[] args) 
+{ 
+int i = 3; 
+int j = 4; 
+int result = add(i, j); 
+System.out.println("Result = " + result); 
+}
+
