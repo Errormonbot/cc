@@ -1,0 +1,28 @@
+Go to Control panel and click on programs.
+Turn Windows features on or off.
+
+Create a new project with using Azure Functions
+Set the dropdown options to (C#, Azure, Cloud)
+Select the option of Azure Cloud Service(basic)
+Set the name for the project and click on Create
+
+Add WebRole1 option and click OK (inside visual C#)
+Select the Empty option and click on Create
+
+Right click on WebRole1 option and Add New item
+Select the web form option in the dropdown list
+
+Run the application
+
+error 
+
+
+open cmd (admin)
+
+cd C: \Program Files (x86) SDKs\Azure\Storage Emulator
+
+netsh http add iplisten 127 .0.0.1
+
+AzureStorageEmu1ator.exe start
+
+run the code again
